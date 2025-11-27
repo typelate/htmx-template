@@ -10,7 +10,7 @@ require (
 require (
 	github.com/andybalholm/cascadia v1.3.3 // indirect
 	github.com/crhntr/dom v0.5.4 // indirect
-	github.com/crhntr/muxt v0.16.0 // indirect
+	github.com/crhntr/muxt v0.16.2 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/ettle/strcase v0.2.0 // indirect
 	github.com/google/go-cmp v0.7.0 // indirect
