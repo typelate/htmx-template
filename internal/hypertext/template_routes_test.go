@@ -6,9 +6,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/crhntr/dom/domtest"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"github.com/typelate/dom/domtest"
 
 	"github.com/crhntr/muxt-template-module-htmx/internal/fake"
 	"github.com/crhntr/muxt-template-module-htmx/internal/hypertext"

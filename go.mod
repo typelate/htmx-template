@@ -3,12 +3,13 @@ module github.com/crhntr/muxt-template-module-htmx
 go 1.24.0
 
 require (
-	github.com/crhntr/dom v0.5.4
 	github.com/stretchr/testify v1.11.1
+	github.com/typelate/dom v0.6.1
 )
 
 require (
 	github.com/andybalholm/cascadia v1.3.3 // indirect
+	github.com/crhntr/dom v0.5.4 // indirect
 	github.com/crhntr/muxt v0.16.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/ettle/strcase v0.2.0 // indirect
