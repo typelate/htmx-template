@@ -1,3 +1,7 @@
+{{define "GET /{$} Index(ctx)" -}}
+  {{template "index.gohtml" .Result -}}
+{{end -}}
+
 <!DOCTYPE html>
 <html lang="en">
 {{block "head" "Welcome!"}}
@@ -18,10 +22,6 @@
 <main class='container'>
 
 <h1 data-test-id='greeting'>Hello, {{.Name}}!</h1>
-
-{{- define "GET /{$} Index(ctx)" -}}
-  {{template "index.gohtml" .}}
-{{- end -}}
 
 </main>
 {{block "footer" 0}}
