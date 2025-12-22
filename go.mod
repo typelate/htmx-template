@@ -4,7 +4,7 @@ go 1.25.0
 
 require (
 	github.com/stretchr/testify v1.11.1
-	github.com/typelate/dom v0.7.0
+	github.com/typelate/dom v0.7.1
 )
 
 require (
@@ -16,8 +16,8 @@ require (
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/spf13/cobra v1.10.2 // indirect
 	github.com/spf13/pflag v1.0.10 // indirect
-	github.com/typelate/check v0.0.6 // indirect
-	github.com/typelate/muxt v0.18.1 // indirect
+	github.com/typelate/check v0.1.0 // indirect
+	github.com/typelate/muxt v0.18.3 // indirect
 	golang.org/x/mod v0.31.0 // indirect
 	golang.org/x/net v0.48.0 // indirect
 	golang.org/x/sync v0.19.0 // indirect
