@@ -1,4 +1,4 @@
-module github.com/typelate/muxt-template-module-htmx
+module github.com/typelate/htmx-template
 
 go 1.25.0
 

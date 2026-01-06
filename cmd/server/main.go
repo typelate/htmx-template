@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/typelate/muxt-template-module-htmx/internal/hypertext"
+	"github.com/typelate/htmx-template/internal/hypertext"
 )
 
 func main() {

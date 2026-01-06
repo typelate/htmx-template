@@ -5,7 +5,7 @@ import (
 	"context"
 	"sync"
 
-	"github.com/typelate/muxt-template-module-htmx/internal/hypertext"
+	"github.com/typelate/htmx-template/internal/hypertext"
 )
 
 type Server struct {

@@ -10,8 +10,8 @@ import (
 	"github.com/stretchr/testify/require"
 	"github.com/typelate/dom/domtest"
 
-	"github.com/typelate/muxt-template-module-htmx/internal/fake"
-	"github.com/typelate/muxt-template-module-htmx/internal/hypertext"
+	"github.com/typelate/htmx-template/internal/fake"
+	"github.com/typelate/htmx-template/internal/hypertext"
 )
 
 func TestTemplates(t *testing.T) {
