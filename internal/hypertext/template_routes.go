@@ -16,6 +16,9 @@ import (
 )
 
 type RoutesReceiver interface {
+	GetContact(_ context.Context) ContactForm
+	Contact(_ context.Context, form ContactForm) ContactResult
+	Page(_ context.Context, slug string) (PageData, error)
 	Index(_ context.Context) IndexData
 }
 
@@ -31,6 +34,92 @@ func TemplateRoutes(mux *http.ServeMux, receiver RoutesReceiver) TemplateRoutePa
 			return
 		}
 		statusCode := cmp.Or(td.statusCode, td.errStatusCode, http.StatusOK)
+		if contentType := response.Header().Get("content-type"); contentType == "" {
+			response.Header().Set("content-type", "text/html; charset=utf-8")
+		}
+		response.Header().Set("content-length", strconv.Itoa(buf.Len()))
+		response.WriteHeader(statusCode)
+		_, _ = buf.WriteTo(response)
+	})
+	mux.HandleFunc("GET /contact", func(response http.ResponseWriter, request *http.Request) {
+		var td = TemplateData[RoutesReceiver, ContactForm]{receiver: receiver, response: response, request: request, pathsPrefix: pathsPrefix}
+		ctx := request.Context()
+		if len(td.errList) == 0 {
+			td.result = receiver.GetContact(ctx)
+			td.okay = true
+		}
+		buf := bytes.NewBuffer(nil)
+		if err := templates.ExecuteTemplate(buf, "GET /contact GetContact(ctx)", &td); err != nil {
+			slog.ErrorContext(request.Context(), "failed to render page", slog.String("path", request.URL.Path), slog.String("pattern", request.Pattern), slog.String("error", err.Error()))
+			http.Error(response, "failed to render page", http.StatusInternalServerError)
+			return
+		}
+		statusCode := cmp.Or(td.statusCode, td.errStatusCode, http.StatusOK)
+		if td.redirectURL != "" {
+			http.Redirect(response, request, td.redirectURL, statusCode)
+			return
+		}
+		if contentType := response.Header().Get("content-type"); contentType == "" {
+			response.Header().Set("content-type", "text/html; charset=utf-8")
+		}
+		response.Header().Set("content-length", strconv.Itoa(buf.Len()))
+		response.WriteHeader(statusCode)
+		_, _ = buf.WriteTo(response)
+	})
+	mux.HandleFunc("POST /contact", func(response http.ResponseWriter, request *http.Request) {
+		var td = TemplateData[RoutesReceiver, ContactResult]{receiver: receiver, response: response, request: request, pathsPrefix: pathsPrefix}
+		ctx := request.Context()
+		request.ParseForm()
+		var form ContactForm
+		form.Name = request.FormValue("name")
+		form.Email = request.FormValue("email")
+		form.Message = request.FormValue("message")
+		if len(td.errList) == 0 {
+			td.result = receiver.Contact(ctx, form)
+			td.okay = true
+		}
+		buf := bytes.NewBuffer(nil)
+		if err := templates.ExecuteTemplate(buf, "POST /contact Contact(ctx, form)", &td); err != nil {
+			slog.ErrorContext(request.Context(), "failed to render page", slog.String("path", request.URL.Path), slog.String("pattern", request.Pattern), slog.String("error", err.Error()))
+			http.Error(response, "failed to render page", http.StatusInternalServerError)
+			return
+		}
+		statusCode := cmp.Or(td.statusCode, td.errStatusCode, http.StatusOK)
+		if td.redirectURL != "" {
+			http.Redirect(response, request, td.redirectURL, statusCode)
+			return
+		}
+		if contentType := response.Header().Get("content-type"); contentType == "" {
+			response.Header().Set("content-type", "text/html; charset=utf-8")
+		}
+		response.Header().Set("content-length", strconv.Itoa(buf.Len()))
+		response.WriteHeader(statusCode)
+		_, _ = buf.WriteTo(response)
+	})
+	mux.HandleFunc("GET /page/{slug}", func(response http.ResponseWriter, request *http.Request) {
+		var td = TemplateData[RoutesReceiver, PageData]{receiver: receiver, response: response, request: request, pathsPrefix: pathsPrefix}
+		ctx := request.Context()
+		slug := request.PathValue("slug")
+		if len(td.errList) == 0 {
+			var err error
+			td.result, err = receiver.Page(ctx, slug)
+			if err != nil {
+				td.errList = append(td.errList, err)
+				td.errStatusCode = http.StatusInternalServerError
+			}
+			td.result = td.result
+		}
+		buf := bytes.NewBuffer(nil)
+		if err := templates.ExecuteTemplate(buf, "GET /page/{slug} Page(ctx, slug)", &td); err != nil {
+			slog.ErrorContext(request.Context(), "failed to render page", slog.String("path", request.URL.Path), slog.String("pattern", request.Pattern), slog.String("error", err.Error()))
+			http.Error(response, "failed to render page", http.StatusInternalServerError)
+			return
+		}
+		statusCode := cmp.Or(td.statusCode, td.errStatusCode, http.StatusOK)
+		if td.redirectURL != "" {
+			http.Redirect(response, request, td.redirectURL, statusCode)
+			return
+		}
 		if contentType := response.Header().Get("content-type"); contentType == "" {
 			response.Header().Set("content-type", "text/html; charset=utf-8")
 		}
@@ -132,6 +221,18 @@ type TemplateRoutePaths struct {
 
 func (routePaths TemplateRoutePaths) ReadAbout() string {
 	return path.Join(cmp.Or(routePaths.pathsPrefix, "/"), "about")
+}
+
+func (routePaths TemplateRoutePaths) GetContact() string {
+	return path.Join(cmp.Or(routePaths.pathsPrefix, "/"), "contact")
+}
+
+func (routePaths TemplateRoutePaths) Contact() string {
+	return path.Join(cmp.Or(routePaths.pathsPrefix, "/"), "contact")
+}
+
+func (routePaths TemplateRoutePaths) Page(slug string) string {
+	return path.Join(cmp.Or(routePaths.pathsPrefix, "/"), "page", slug)
 }
 
 func (routePaths TemplateRoutePaths) Index() string {

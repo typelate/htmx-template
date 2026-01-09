@@ -1,0 +1,99 @@
+{{define "GET /contact GetContact(ctx)" -}}
+{{template "contact.gohtml" .Result}}
+{{- end}}
+
+{{define "POST /contact Contact(ctx, form)" -}}
+{{- if .Result.Success -}}
+{{.Header "HX-Trigger" "contact-sent"}}
+<div class="success" role="alert">
+    <p>Thank you, {{.Result.Form.Name}}! Your message has been sent.</p>
+    <a href="/contact" hx-boost="true" hx-select="main" hx-target="main">Send another message</a>
+</div>
+{{- else -}}
+{{template "contact-form" .Result.Form}}
+{{- end -}}
+{{- end}}
+
+{{define "GET /page/{slug} Page(ctx, slug)" -}}
+{{- if .Err -}}
+{{- .StatusCode 404 -}}
+{{template "error-page" .}}
+{{- else -}}
+{{template "page.gohtml" .Result}}
+{{- end -}}
+{{- end}}
+
+<!DOCTYPE html>
+<html lang="en">
+{{template "head" "Contact Us"}}
+<body>
+<main class="container">
+
+<h1>Contact Us</h1>
+<p>This form demonstrates muxt form validation attributes and HTMX integration.</p>
+
+{{template "contact-form" .}}
+
+</main>
+{{template "footer"}}
+</body>
+</html>
+
+{{define "contact-form"}}
+<form hx-post="/contact" hx-swap="outerHTML">
+    <label>Name
+        <input type="text"
+               name="name"
+               minlength="2"
+               maxlength="50"
+               required
+               placeholder="Your name"
+               value="{{.Name}}">
+    </label>
+    <label>Email
+        <input type="email"
+               name="email"
+               pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+               required
+               placeholder="you@example.com"
+               value="{{.Email}}">
+    </label>
+    <label>Message
+        <textarea name="message"
+                  minlength="10"
+                  maxlength="500"
+                  required
+                  placeholder="Your message (10-500 characters)">{{.Message}}</textarea>
+    </label>
+    <button type="submit">Send Message</button>
+</form>
+{{end}}
+
+{{define "error-page"}}
+<!DOCTYPE html>
+<html lang="en">
+{{template "head" "Error"}}
+<body>
+<main class="container">
+    <h1>Error</h1>
+    <p class="error">{{.Err}}</p>
+    <a href="/" hx-boost="true" hx-select="main" hx-target="main">Go home</a>
+</main>
+{{template "footer"}}
+</body>
+</html>
+{{end}}
+
+{{define "page.gohtml"}}
+<!DOCTYPE html>
+<html lang="en">
+{{template "head" .Slug}}
+<body>
+<main class="container">
+    <h1>{{.Slug}}</h1>
+    <p>{{.Content}}</p>
+</main>
+{{template "footer"}}
+</body>
+</html>
+{{end}}

@@ -9,6 +9,29 @@ import (
 )
 
 type Server struct {
+	ContactStub        func(context.Context, hypertext.ContactForm) hypertext.ContactResult
+	contactMutex       sync.RWMutex
+	contactArgsForCall []struct {
+		arg1 context.Context
+		arg2 hypertext.ContactForm
+	}
+	contactReturns struct {
+		result1 hypertext.ContactResult
+	}
+	contactReturnsOnCall map[int]struct {
+		result1 hypertext.ContactResult
+	}
+	GetContactStub        func(context.Context) hypertext.ContactForm
+	getContactMutex       sync.RWMutex
+	getContactArgsForCall []struct {
+		arg1 context.Context
+	}
+	getContactReturns struct {
+		result1 hypertext.ContactForm
+	}
+	getContactReturnsOnCall map[int]struct {
+		result1 hypertext.ContactForm
+	}
 	IndexStub        func(context.Context) hypertext.IndexData
 	indexMutex       sync.RWMutex
 	indexArgsForCall []struct {
@@ -20,8 +43,145 @@ type Server struct {
 	indexReturnsOnCall map[int]struct {
 		result1 hypertext.IndexData
 	}
+	PageStub        func(context.Context, string) (hypertext.PageData, error)
+	pageMutex       sync.RWMutex
+	pageArgsForCall []struct {
+		arg1 context.Context
+		arg2 string
+	}
+	pageReturns struct {
+		result1 hypertext.PageData
+		result2 error
+	}
+	pageReturnsOnCall map[int]struct {
+		result1 hypertext.PageData
+		result2 error
+	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
+}
+
+func (fake *Server) Contact(arg1 context.Context, arg2 hypertext.ContactForm) hypertext.ContactResult {
+	fake.contactMutex.Lock()
+	ret, specificReturn := fake.contactReturnsOnCall[len(fake.contactArgsForCall)]
+	fake.contactArgsForCall = append(fake.contactArgsForCall, struct {
+		arg1 context.Context
+		arg2 hypertext.ContactForm
+	}{arg1, arg2})
+	stub := fake.ContactStub
+	fakeReturns := fake.contactReturns
+	fake.recordInvocation("Contact", []interface{}{arg1, arg2})
+	fake.contactMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1
+	}
+	return fakeReturns.result1
+}
+
+func (fake *Server) ContactCallCount() int {
+	fake.contactMutex.RLock()
+	defer fake.contactMutex.RUnlock()
+	return len(fake.contactArgsForCall)
+}
+
+func (fake *Server) ContactCalls(stub func(context.Context, hypertext.ContactForm) hypertext.ContactResult) {
+	fake.contactMutex.Lock()
+	defer fake.contactMutex.Unlock()
+	fake.ContactStub = stub
+}
+
+func (fake *Server) ContactArgsForCall(i int) (context.Context, hypertext.ContactForm) {
+	fake.contactMutex.RLock()
+	defer fake.contactMutex.RUnlock()
+	argsForCall := fake.contactArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *Server) ContactReturns(result1 hypertext.ContactResult) {
+	fake.contactMutex.Lock()
+	defer fake.contactMutex.Unlock()
+	fake.ContactStub = nil
+	fake.contactReturns = struct {
+		result1 hypertext.ContactResult
+	}{result1}
+}
+
+func (fake *Server) ContactReturnsOnCall(i int, result1 hypertext.ContactResult) {
+	fake.contactMutex.Lock()
+	defer fake.contactMutex.Unlock()
+	fake.ContactStub = nil
+	if fake.contactReturnsOnCall == nil {
+		fake.contactReturnsOnCall = make(map[int]struct {
+			result1 hypertext.ContactResult
+		})
+	}
+	fake.contactReturnsOnCall[i] = struct {
+		result1 hypertext.ContactResult
+	}{result1}
+}
+
+func (fake *Server) GetContact(arg1 context.Context) hypertext.ContactForm {
+	fake.getContactMutex.Lock()
+	ret, specificReturn := fake.getContactReturnsOnCall[len(fake.getContactArgsForCall)]
+	fake.getContactArgsForCall = append(fake.getContactArgsForCall, struct {
+		arg1 context.Context
+	}{arg1})
+	stub := fake.GetContactStub
+	fakeReturns := fake.getContactReturns
+	fake.recordInvocation("GetContact", []interface{}{arg1})
+	fake.getContactMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1
+	}
+	return fakeReturns.result1
+}
+
+func (fake *Server) GetContactCallCount() int {
+	fake.getContactMutex.RLock()
+	defer fake.getContactMutex.RUnlock()
+	return len(fake.getContactArgsForCall)
+}
+
+func (fake *Server) GetContactCalls(stub func(context.Context) hypertext.ContactForm) {
+	fake.getContactMutex.Lock()
+	defer fake.getContactMutex.Unlock()
+	fake.GetContactStub = stub
+}
+
+func (fake *Server) GetContactArgsForCall(i int) context.Context {
+	fake.getContactMutex.RLock()
+	defer fake.getContactMutex.RUnlock()
+	argsForCall := fake.getContactArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *Server) GetContactReturns(result1 hypertext.ContactForm) {
+	fake.getContactMutex.Lock()
+	defer fake.getContactMutex.Unlock()
+	fake.GetContactStub = nil
+	fake.getContactReturns = struct {
+		result1 hypertext.ContactForm
+	}{result1}
+}
+
+func (fake *Server) GetContactReturnsOnCall(i int, result1 hypertext.ContactForm) {
+	fake.getContactMutex.Lock()
+	defer fake.getContactMutex.Unlock()
+	fake.GetContactStub = nil
+	if fake.getContactReturnsOnCall == nil {
+		fake.getContactReturnsOnCall = make(map[int]struct {
+			result1 hypertext.ContactForm
+		})
+	}
+	fake.getContactReturnsOnCall[i] = struct {
+		result1 hypertext.ContactForm
+	}{result1}
 }
 
 func (fake *Server) Index(arg1 context.Context) hypertext.IndexData {
@@ -83,6 +243,71 @@ func (fake *Server) IndexReturnsOnCall(i int, result1 hypertext.IndexData) {
 	fake.indexReturnsOnCall[i] = struct {
 		result1 hypertext.IndexData
 	}{result1}
+}
+
+func (fake *Server) Page(arg1 context.Context, arg2 string) (hypertext.PageData, error) {
+	fake.pageMutex.Lock()
+	ret, specificReturn := fake.pageReturnsOnCall[len(fake.pageArgsForCall)]
+	fake.pageArgsForCall = append(fake.pageArgsForCall, struct {
+		arg1 context.Context
+		arg2 string
+	}{arg1, arg2})
+	stub := fake.PageStub
+	fakeReturns := fake.pageReturns
+	fake.recordInvocation("Page", []interface{}{arg1, arg2})
+	fake.pageMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *Server) PageCallCount() int {
+	fake.pageMutex.RLock()
+	defer fake.pageMutex.RUnlock()
+	return len(fake.pageArgsForCall)
+}
+
+func (fake *Server) PageCalls(stub func(context.Context, string) (hypertext.PageData, error)) {
+	fake.pageMutex.Lock()
+	defer fake.pageMutex.Unlock()
+	fake.PageStub = stub
+}
+
+func (fake *Server) PageArgsForCall(i int) (context.Context, string) {
+	fake.pageMutex.RLock()
+	defer fake.pageMutex.RUnlock()
+	argsForCall := fake.pageArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
+}
+
+func (fake *Server) PageReturns(result1 hypertext.PageData, result2 error) {
+	fake.pageMutex.Lock()
+	defer fake.pageMutex.Unlock()
+	fake.PageStub = nil
+	fake.pageReturns = struct {
+		result1 hypertext.PageData
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *Server) PageReturnsOnCall(i int, result1 hypertext.PageData, result2 error) {
+	fake.pageMutex.Lock()
+	defer fake.pageMutex.Unlock()
+	fake.PageStub = nil
+	if fake.pageReturnsOnCall == nil {
+		fake.pageReturnsOnCall = make(map[int]struct {
+			result1 hypertext.PageData
+			result2 error
+		})
+	}
+	fake.pageReturnsOnCall[i] = struct {
+		result1 hypertext.PageData
+		result2 error
+	}{result1, result2}
 }
 
 func (fake *Server) Invocations() map[string][][]interface{} {
