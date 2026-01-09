@@ -4,7 +4,7 @@
 
 {{define "POST /contact Contact(ctx, form)" -}}
 {{- if .Result.Success -}}
-{{.Header "HX-Trigger" "contact-sent"}}
+{{with .Header "HX-Trigger" "contact-sent"}}{{end}}
 <div class="success" role="alert">
     <p>Thank you, {{.Result.Form.Name}}! Your message has been sent.</p>
     <a href="/contact" hx-boost="true" hx-select="main" hx-target="main">Send another message</a>
