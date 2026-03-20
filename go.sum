@@ -36,12 +36,16 @@ github.com/stretchr/testify v1.11.1 h1:7s2iGBzp5EwR7/aIZr8ao5+dra3wiQyKjjFuvgVKu
 github.com/stretchr/testify v1.11.1/go.mod h1:wZwfW3scLgRK+23gO65QZefKpKQRnfz6sD981Nm4B6U=
 github.com/typelate/check v0.1.0 h1:gR5edBp4bovkBba7go+LWOKYy9kmzi9w7gs6OVteGWg=
 github.com/typelate/check v0.1.0/go.mod h1:nhEmO+YANCfkLmz96C9FO3U5tRPMBiJYrZHheC2dbJw=
+github.com/typelate/check v0.1.2 h1:JPKq7p0RDjuxPvurbSrp8f6su/RtPEN3sCMI7DiDsvU=
+github.com/typelate/check v0.1.2/go.mod h1:1fdEbmtW29F/Hog3XMNFT0nP7MpXLdZ3/55oKp2yPRA=
 github.com/typelate/dom v0.7.1 h1:AfLFuzPtyNf28yhyAB6iJmjXkeAml0evMpRicPU+0oo=
 github.com/typelate/dom v0.7.1/go.mod h1:rMxxYIyJFPYLUEP7axtmApy1Es7vwcbz19OPaO8Mf88=
 github.com/typelate/dom v0.7.4 h1:0ECI2cAtoE78myunEWocM2MiqOEm/WorjBE88mnYct8=
 github.com/typelate/dom v0.7.4/go.mod h1:GnaThhtEVB0Hx8pSZqapaPefxIMcsy0aG4PG157s4Js=
 github.com/typelate/muxt v0.18.3 h1:oooudZ9pjUEQgAB2QDPpCm7CZ+NTLmp69nW4THF+L5Q=
 github.com/typelate/muxt v0.18.3/go.mod h1:/2Kq6Cos3DJMtrBjkTbsqa27t6rUl1beYvgVm+eZO90=
+github.com/typelate/muxt v0.19.4 h1:wm8wgxskqy7zIxkqL5Y7PgzT0OEn1BXMAXvpkS/vE6g=
+github.com/typelate/muxt v0.19.4/go.mod h1:Z0KFjn5LvRNJ7HTVlXHBNw97Bnl8BKgj5aoImpX3oks=
 github.com/yuin/goldmark v1.4.13/go.mod h1:6yULJ656Px+3vBD8DxQVa3kxgyrAnzto9xy5taEt/CY=
 go.yaml.in/yaml/v3 v3.0.4 h1:tfq32ie2Jv2UxXFdLJdh3jXuOzWiL1fo0bu/FbuKpbc=
 go.yaml.in/yaml/v3 v3.0.4/go.mod h1:DhzuOOF2ATzADvBadXxruRBLzYTpT36CKvDb3+aBEFg=
