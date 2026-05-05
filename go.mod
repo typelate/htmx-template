@@ -4,7 +4,7 @@ go 1.25.0
 
 require (
 	github.com/stretchr/testify v1.11.1
-	github.com/typelate/dom v0.7.4
+	github.com/typelate/dom v0.7.5
 )
 
 require (
